@@ -24,7 +24,7 @@ const Post = ({post}) => {
           <Text>{post.text}</Text>
           <View style={style.tags}>
             {post.tags.map(tag => (
-              <View key={tag.id} style={style.tag}>
+              <View key={tag} style={style.tag}>
                 <Text style={style.tagText}>{tag}</Text>
               </View>
             ))}
@@ -45,7 +45,7 @@ const Post = ({post}) => {
 const style = StyleSheet.create({
   card: {
     backgroundColor: 'white',
-    marginVertical: 20,
+    marginTop: 20,
     padding: 15,
     marginHorizontal: 10,
   },
