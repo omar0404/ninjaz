@@ -21,6 +21,13 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
