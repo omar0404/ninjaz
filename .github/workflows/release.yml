@@ -1,5 +1,7 @@
 name: send android apk on release
-on: workflow_dispatch
+on:
+  release:
+    types: [published]
 
 jobs:
   install-and-test:
@@ -26,7 +28,7 @@ jobs:
           cache: gradle
           distribution: temurin
           java-version: 17
-          
+
       - name: 'Create env file'
         run: |
           touch .env
@@ -40,7 +42,7 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
-     
+
       - name: Send APK via Email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -48,9 +50,27 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "New APK Build"
-          body: "Please find attached the latest APK build."
-          to: "omar97.hassan97@gmail.com"
-          from: "omar97.hassan97@gmail.com"
+          subject: 'New APK Build'
+          body: 'Please find attached the latest APK build.'
+          to: 'omar97.hassan97@gmail.com'
+          from: 'omar97.hassan97@gmail.com'
+          attachments: |
+            android/app/build/outputs/apk/release/app-release.apk
+  send-apk-on-release:
+    needs: build-android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Send APK via Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'New APK Build'
+          body: "${process.env.GITHUB_EVENT.release.name} \n ${process.env.GITHUB_EVENT.release.tag_name} \n   ${process.env.GITHUB_EVENT.release.body}"
+          to: 'karim@ninjaz.ae'
+          from: 'omar97.hassan97@gmail.com'
           attachments: |
             android/app/build/outputs/apk/release/app-release.apk
