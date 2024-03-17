@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const ComingSoon = () => {
   return (
-    <View style={style.container}>
+    <View testID="comming-soon" style={style.container}>
       <Text style={style.text}>Coming Soon</Text>
     </View>
   );

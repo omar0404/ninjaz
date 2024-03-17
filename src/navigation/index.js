@@ -8,7 +8,11 @@ function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Posts" component={Posts} />
-      <Tab.Screen name="Tab2" component={ComingSoon} />
+      <Tab.Screen
+        options={{tabBarTestID: 'tab2'}}
+        name="Tab2"
+        component={ComingSoon}
+      />
       <Tab.Screen name="Tab3" component={ComingSoon} />
     </Tab.Navigator>
   );

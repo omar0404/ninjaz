@@ -19,14 +19,14 @@ const Posts = () => {
       <FlatList
         contentContainerStyle={{paddingBottom: 100}}
         data={posts}
-        renderItem={({item}) => <Post post={item} />}
+        renderItem={({item, index}) => <Post index={index} post={item} />}
         keyExtractor={item => item.id}
         onRefresh={onRefresh}
         refreshing={refreshing}
         onEndReached={onEndReached}
         ListEmptyComponent={
           loading ? (
-            <View style={style.loading}>
+            <View testID="loading" style={style.loading}>
               <ActivityIndicator />
             </View>
           ) : (

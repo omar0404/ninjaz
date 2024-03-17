@@ -1,9 +1,9 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
-const Post = ({post}) => {
+const Post = ({post, index}) => {
   return (
-    <View style={style.card}>
+    <View testID={`post-${index}`} style={style.card}>
       <View style={style.owner}>
         {post.owner?.picture ? (
           <FastImage style={style.avatar} source={{uri: post.owner.picture}} />
