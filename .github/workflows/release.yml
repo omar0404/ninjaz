@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'New APK Build'
-          body: "${process.env.GITHUB_EVENT.release.name} \n ${process.env.GITHUB_EVENT.release.tag_name} \n   ${process.env.GITHUB_EVENT.release.body} \n https://github.com/omar0404/ninjaz/actions/runs/8316294144/artifacts/1333122442"
+          body: "${process.env.GITHUB_EVENT.release.name} \n ${process.env.GITHUB_EVENT.release.tag_name} \n   ${process.env.GITHUB_EVENT.release.body}"
           to: 'karim@ninjaz.ae'
           from: 'omar97.hassan97@gmail.com'
 
