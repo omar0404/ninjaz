@@ -7,4 +7,5 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|@react-native|@realm|react-native-config)/)',
   ],
+  testPathIgnorePatterns: ['<rootDir>/e2e'],
 };
