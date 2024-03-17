@@ -13,7 +13,7 @@ jobs:
         run: |
           npm run test
       - name: Setup Node.js
-          uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
 
       - name: Setup Java
         uses: actions/setup-java@v3
