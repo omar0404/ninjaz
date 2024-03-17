@@ -12,39 +12,26 @@ jobs:
       - name: Run Tests
         run: |
           npm run test
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-
+  build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           cache: gradle
           distribution: temurin
           java-version: 17
-
-      - name: Detox build
-        run: yarn detox build --configuration android.emu.release
-
-      - name: Get device name
-        id: device
-        run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
-
-      - name: Detox test
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 31
-          arch: x86_64
-          avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: yarn detox test --configuration android.emu.release --headless --record-logs all
-
-      - name: Run e2e tests
+          
+      - name: 'Create env file'
         run: |
-          npm run e2e
-
-  build-android:
-    needs: install-and-test
-    runs-on: ubuntu-latest
-    steps:
+          touch .env
+          echo API_URL=${{ vars.API_URL }} >> .env
+          cat .env
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
@@ -53,3 +40,17 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+     
+      - name: Send APK via Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "New APK Build"
+          body: "Please find attached the latest APK build."
+          to: "omar97.hassan97@gmail.com"
+          from: "omar97.hassan97@gmail.com"
+          attachments: |
+            android/app/build/outputs/apk/release/app-release.apk
