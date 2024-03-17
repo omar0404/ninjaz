@@ -40,3 +40,17 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+     
+      - name: Send APK via Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "New APK Build"
+          body: "Please find attached the latest APK build."
+          to: "omar97.hassan97@gmail.com"
+          from: "omar97.hassan97@gmail.com"
+          attachments: |
+            android/app/build/outputs/apk/release/app-release.apk
