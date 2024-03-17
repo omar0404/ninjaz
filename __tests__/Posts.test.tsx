@@ -1,6 +1,5 @@
 import 'react-native';
 import React from 'react';
-import '@testing-library/react-native/extend-expect';
 
 import {it, jest, expect} from '@jest/globals';
 
