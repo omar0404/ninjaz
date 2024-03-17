@@ -9,7 +9,7 @@ const Post = ({post}) => {
           <FastImage style={style.avatar} source={{uri: post.owner.picture}} />
         ) : (
           <Text>
-            {post.owner.firstName[0]} {post.owner.lastName[0]}
+            {post.owner.firstName[0]} {post.owner.lastName?.[0]}
           </Text>
         )}
         <View style={style.ownerData}>
@@ -23,7 +23,7 @@ const Post = ({post}) => {
         <View style={style.bodyRight}>
           <Text>{post.text}</Text>
           <View style={style.tags}>
-            {post.tags.map(tag => (
+            {(post?.tags ?? []).map(tag => (
               <View key={tag} style={style.tag}>
                 <Text style={style.tagText}>{tag}</Text>
               </View>

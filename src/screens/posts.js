@@ -30,7 +30,9 @@ const Posts = () => {
               <ActivityIndicator />
             </View>
           ) : (
-            <Text style={style.noData}>no data</Text>
+            <Text testID="no-data" style={style.noData}>
+              no data
+            </Text>
           )
         }
         ListFooterComponent={

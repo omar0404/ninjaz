@@ -78,7 +78,6 @@ const usePosts = () => {
           savePosts(res.data.data);
         })
         .catch(err => {
-          alert(err);
           setLoading(false);
         });
     } else {
